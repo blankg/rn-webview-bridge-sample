@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Hello Static World</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=320, user-scalable=no">
+    <script src="webViewBridge.js"></script>
+    <style type="text/css">
+        body {
+            display: flex;
+            background: azure;
+            justify-content: center;
+            align-content: center;
+        }
+        button {
+            text-align: center;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <button id="button" onclick="clickHandler();" >Send to RN</button>
+</div>
+<script>
+    window.counter = 0;
+    function clickHandler() {
+		window.counter++;
+        window.webViewBridge.send('handleDataReceived', window.counter, function(res) {
+            window.document.getElementById("button").setAttribute("style", "background-color: " + res);
+        }, function(err) {
+			window.document.getElementById("container").setAttribute("style", "background-color: " + err);
+        });
+    }
+</script>
+
+</body>
+</html>
